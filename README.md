@@ -8,11 +8,11 @@
   * Why is this superior to regular file override in original?
     * The issue with the complete file override is that many websites use big js frameworks, so in that code one may want to change "var showCommercialBreak = true" to simply false.
     * The issue with this is that this only works until the website developers updates their script, could be something very small that has nothing to do with our change such as an api call.
-           Now what is happening is our old file override has all of the OLD content(including our change) and this would cause the webpage to not function anymore since it's not up to date...
+           Now what is happening is our old file override has all of the OLD content(including our change) and this MAY cause the webpage to not function anymore since it's not up to date...
            so you would have to recopy their updated original script and add your changes yet again... and this cycle continues.
           
-    * The way to solve this is by replacing with regex... not as easy, but a very permanent solution(do once and forget it).
-              *find your target script value or section you wanna change /var showCommercialBreak = true/i and replace it with your choice.
-              *This is gonna make sure you get an updated script each time and perform a replace operation just on that specific place, which makes
+    * The way to solve this is by replacing with regex... not as easy, but as close as you get to a permanent solution(do once and forget it).
+      * find your target script value or section you wanna change /var showCommercialBreak = true/i and replace it with your choice.
+      * This is gonna make sure you get an updated script each time and perform a replace operation just on that specific place, which makes
               this keep on working even if website developers updates their scripts.
               
