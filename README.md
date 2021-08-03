@@ -4,7 +4,7 @@
   
 * Around 350X less browser slowdown on start(based on window.performance.now() timer tests)
   *   the reason for this is because it uses a config.js file instead which loads instantly AND all ui components are completely stripped of from this fork which makes loading much faster since all bloat is gone
-*Supports regex file replacing:
+*   Supports regex file replacing:
   *one of the most important feature that was needed in the original plugin. Specify target script on page, and replace it's content with regex replacements...
 *Why is this superior to regular file override in original?
   *The issue with the complete file override is that many websites use big js frameworks, so in that code one may want to change "var showCommercialBreak = true" to simply false.
