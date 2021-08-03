@@ -1,4 +1,4 @@
-# ResourceOverride Fork - A more powerful & less user friendly version of original plugin.
+# ResourceOverride Fork - A more powerful but less user friendly version of original plugin.
 * To install this forked version:
   1. place all content of this repo into dropbox/onedrive/googledrive synced folder on your computer(or not if you dont want cloud sync)
   2. Go into chrome, plugins and press Load Unpacked plugin and select the location where you downloaded this repository
