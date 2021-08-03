@@ -17,3 +17,4 @@
               *This is gonna make sure you get an updated script each time and perform a replace operation just on that specific place, which makes
               this keep on working even if website developers updates their scripts.
               
+f
