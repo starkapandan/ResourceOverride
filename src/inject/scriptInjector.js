@@ -51,9 +51,9 @@
 
     chrome.runtime.onMessage.addListener(function(msg) {
         if (msg.action === 'log') {
-            var logStyle = "color: #007182; font-weight: bold;";
+            var logStyle = "color: #b2e6ff; font-weight: bold;";
             if (msg.important) {
-                logStyle += "background: #AAFFFF;";
+                logStyle += "background: #547059;";
             }
             console.log("%c[Resource Override] " + msg.message, logStyle);
         }

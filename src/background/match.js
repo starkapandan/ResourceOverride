@@ -10,14 +10,23 @@ function tokenize(str) {
     return ans;
 }
 
-function match(pattern, str) {
+function string_to_RegExp(regexString, defaultFlag = undefined) {
+    var matches = regexString.match(/(\/?)(.+)\1([a-z]*)/i);
+    if (matches == undefined) {
+        return undefined;
+    }
+    var regexProcessedFilter = new RegExp(matches[2], matches[3]);
+    return regexProcessedFilter;
+}
+
+function globMatch(pattern, str) {
     "use strict";
     var patternTokens = tokenize(pattern);
     var freeVars = {};
     var varGroup;
     var strParts = str;
     var matchAnything = false;
-    var completeMatch = patternTokens.every(function(token) {
+    var completeMatch = patternTokens.every(function (token) {
         if (token.charAt(0) === "*") {
             matchAnything = true;
             varGroup = token.length;
@@ -67,42 +76,31 @@ function match(pattern, str) {
     };
 }
 
-function replaceAfter(str, idx, match, replace) {
+function match(regexPattern, str) {
     "use strict";
-    return str.substring(0, idx) + str.substring(idx).replace(match, replace);
+    if ((regexPattern instanceof RegExp) === false) {
+        const matchRes = globMatch(regexPattern, str);
+        if (matchRes.matched) {
+            matchRes.captureGroups = [str];
+        }
+        return matchRes;
+    }
+    var matches = str.match(regexPattern);
+
+    return {
+        matched: matches ? true : false,
+        captureGroups: matches
+    };
 }
 
-function matchReplace(pattern, replacePattern, str) {
-    "use strict";
-    var matchData;
-    if (pattern.matched !== undefined && pattern.freeVars !== undefined) {
-        // accept match objects.
-        matchData = pattern;
-    } else {
-        matchData = match(pattern, str);
-    }
 
-    if (!matchData.matched) {
-        // If the pattern didn't match.
+String.prototype.matchReplace = function (regexPattern, str) {
+    if ((regexPattern instanceof RegExp) === false) {
+        const matchRes = globMatch(regexPattern, str);
+        if (matchRes.matched) {
+            matchRes.captureGroups = [str];
+        }
         return str;
     }
-
-    // Plug in the freevars in place of the stars.
-    var starGroups = replacePattern.match(/\*+/g) || [];
-    var currentStarGroupIdx = 0;
-    var freeVar;
-    var freeVarGroup;
-    starGroups.forEach(function(starGroup) {
-        freeVarGroup = matchData.freeVars[starGroup.length] || [];
-        freeVar = freeVarGroup.shift();
-        freeVar = freeVar === undefined ? starGroup : freeVar;
-        replacePattern = replaceAfter(replacePattern, currentStarGroupIdx, starGroup, freeVar);
-        currentStarGroupIdx = replacePattern.indexOf(freeVar) + freeVar.length;
-    });
-
-    return replacePattern;
-}
-
-if (typeof module === "object" && module.exports) {
-    module.exports = matchReplace;
+    return ;
 }

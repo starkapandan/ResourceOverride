@@ -2,6 +2,8 @@
 {
     bgapp.makeHeaderHandler = function(type) {
         return function(details) {
+            //bgapp.util.logOnTab(details.tabId, JSON.stringify(details));
+
             const headers = details[type + "Headers"];
             if (details.tabId > -1 && headers) {
                 let tabUrl = bgapp.tabUrlTracker.getUrlFromId(details.tabId);
@@ -55,7 +57,7 @@
         const headerObjToReturn = {};
         const headerObjToReturnKey = type + "Headers";
         headerObjToReturn[headerObjToReturnKey] = headers;
-        if (ruleObj.on && ruleObj.type === "headerRule" && match(ruleObj.match, requestUrl).matched) {
+        if (ruleObj.on && ruleObj.type === ruleTypeEnum.headerModifier && match(ruleObj.match, requestUrl).matched) {
             const rulesStr = ruleObj[type + "Rules"];
             bgapp.util.logOnTab(tabId, "Header Rule Matched: " + requestUrl +
                 " applying rules: " + rulesStr, true);
@@ -105,11 +107,12 @@
     };
 
     const handleHeaders = function(type, requestUrl, tabUrl, headers, tabId) {
+
         const headerObjToReturn = {};
         const headerObjToReturnKey = type + "Headers";
         headerObjToReturn[headerObjToReturnKey] = headers;
-        for (const key in bgapp.ruleDomains) {
-            const domainObj = bgapp.ruleDomains[key];
+        for(var i=0;i<bgapp.config.replacementPackages.length; i++){
+            const domainObj = bgapp.config.replacementPackages[i];
             return processTabGroup(domainObj, type, requestUrl, tabUrl, headers, tabId);
         }
         return headerObjToReturn;
