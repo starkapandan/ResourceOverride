@@ -3,8 +3,7 @@
   1. place all content of this repo into dropbox/onedrive/googledrive synced folder on your computer(or not if you dont want cloud sync)
   2. Go into chrome, plugins and press Load Unpacked plugin and select the location where you downloaded this repository
   3. voila.
-* uses config.js file instead of webbased ui configuration which means that is can be placed in google drive/one drive/etc and be synced, simply enable chrome developer mode,
-  and load unpacked extension from synced directory.
+* uses config.js file instead of webbased ui configuration which means that cloud sync is possible
   
 * Around 350X less browser slowdown on start(based on window.performance.now() timer tests)
   *   the reason for this is because it uses a config.js file instead which loads instantly AND all ui components are completely stripped of from this fork which makes loading much faster since all bloat is gone
